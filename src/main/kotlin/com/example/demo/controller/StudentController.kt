@@ -1,25 +1,36 @@
 package com.example.demo.controller
 
+import com.example.demo.model.Student
 import com.example.demo.service.StudentService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/student")
 class StudentController @Autowired constructor(private val studentService: StudentService){
 
     @GetMapping
-    fun index():String = "Hello World"
+    fun get():List<Student> = studentService.get()
 
-    @GetMapping("/calc/sum")
-    fun sum(@RequestParam("num1") num1:Double, @RequestParam("num2") num2:Double) :
-            String = "Resultado : ${studentService.sum(num1, num2)}"
+    @GetMapping("/{id}")
+    fun get(@PathVariable("id") id: Int): Student = studentService.get(id)
 
-    @GetMapping("/calc/sub")
-    fun sub(@RequestParam("num1") num1:Double, @RequestParam("num2") num2:Double) :
-            String = "Resultado : ${studentService.sub(num1, num2)}"
+    @PostMapping
+    fun save(@RequestBody student: Student) = studentService.save(student)
 
+    @PutMapping
+    fun update(@RequestBody student: Student) = studentService.update(student)
+
+    @DeleteMapping("/{id}")
+    fun delete(@PathVariable("id") id: Int) = studentService.delete(id)
 }
+
+//
+//    @GetMapping("/calc/sum/{num1}/{num2}")
+//    fun sum(@PathVariable("num1") num1:Double, @PathVariable("num2") num2:Double) :
+//            String = "Resultado : ${studentService.sum(num1, num2)}"
+//
+//    @GetMapping("/calc/sub/{num1}/{num2}")
+//    fun sub(@PathVariable("num1") num1:Double, @PathVariable("num2") num2:Double) :
+//            String = "Resultado : ${studentService.sub(num1, num2)}"
