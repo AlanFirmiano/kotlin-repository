@@ -8,6 +8,16 @@ import org.springframework.stereotype.Service
 @Service
 class StudentService @Autowired constructor(private val studentRepository: StudentRepository) {
 
+    val listaStudents = listOf("Gley", "Leo", "Alan", "Gabriel")
+
+    fun mostrar(): List<String> {
+        var safe:Int? = null //safe call operator
+        val bomHumor = false
+        println("Hoje estou ${ if (bomHumor) "feliz" else "triste"} \nsafe : ${safe?: "sucesso"}") //elvis operator
+
+        return listaStudents.sorted()
+    }
+
     fun save(student: Student):String {
         studentRepository.save(student)
         return "Sucess!"

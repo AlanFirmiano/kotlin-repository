@@ -25,6 +25,8 @@ class StudentController @Autowired constructor(private val studentService: Stude
     @DeleteMapping("/{id}")
     fun delete(@PathVariable("id") id: Int) = studentService.delete(id)
 
+    @GetMapping("/mostrar")
+    fun mostrar():ResponseEntity<List<String>> = ResponseEntity.ok(studentService.mostrar())
 
     @GetMapping("/calc/sum/{num1}/{num2}")
     fun sum(@PathVariable("num1") num1:Double, @PathVariable("num2") num2:Double) :
